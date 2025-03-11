@@ -6,4 +6,5 @@ int main() {
 	scanf_s("%d", &variabila);
 	printf("Ati introdus: %d", variabila);
 	return 0;
+	//comentariu test
 }
