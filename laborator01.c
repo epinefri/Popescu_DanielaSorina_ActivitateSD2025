@@ -29,8 +29,9 @@ void afisare(struct Telefon t) {
 	printf("%d. Telefonul %s seria %c are %d GB RAM si costa %5.2f RON\n", t.id, t.producator, t.serie, t.RAM, t.pret);
 }
 
-void modifica_Atribut(struct Telefon t) {
-	//modificarea unui atribut
+// Functie de modificare a unui atribut
+void modificaPret(struct Telefon* t, float pretNou) { // pointer catre structura Telefon
+	t->pret = pretNou; // sau (*t).pret = pretNou; 
 }
 
 void dezalocare(struct Telefon* t) {
@@ -42,5 +43,8 @@ int main() {
 	t = initializare(1, 256, "Samsung", 2000.5, 'A');
 		// "sir de caractere", 'c' (singur caracter)
 	afisare(t);
+	modificaPret(&t, 1000);
+	afisare(t);
 	return 0;
+
 }
