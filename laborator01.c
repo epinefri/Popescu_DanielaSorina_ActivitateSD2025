@@ -26,16 +26,25 @@ struct Telefon initializare(int id, int ram, const char* producator, float pret,
 }
 
 void afisare(struct Telefon t) {
-	printf("%d. Telefonul %s seria %c are %d GB RAM si costa %5.2f RON\n", t.id, t.producator, t.serie, t.RAM, t.pret);
+	if (t.producator != NULL)
+		printf("%d. Telefonul %s seria %c are %d GB RAM si costa %5.2f RON\n", t.id, t.producator, t.serie, t.RAM, t.pret);
+	else
+		printf("%d. Telefonul seria %c are %d GB RAM si costa %5.2f RON\n", t.id, t.serie, t.RAM, t.pret);
+
 }
 
 // Functie de modificare a unui atribut
 void modificaPret(struct Telefon* t, float pretNou) { // pointer catre structura Telefon
-	t->pret = pretNou; // sau (*t).pret = pretNou; 
+	if (pretNou>0)
+		t->pret = pretNou; // sau (*t).pret = pretNou; 
 }
 
+	// Functie pt dezalocare campuri alocate dinamic
 void dezalocare(struct Telefon* t) {
-	//dezalocare campuri alocate dinamic
+	if (t->producator != NULL) {
+		free(t->producator);
+		t->producator = NULL;
+	}
 }
 
 int main() {
@@ -43,8 +52,9 @@ int main() {
 	t = initializare(1, 256, "Samsung", 2000.5, 'A');
 		// "sir de caractere", 'c' (singur caracter)
 	afisare(t);
-	modificaPret(&t, 1000);
+	modificaPret(&t, 1000); // transmiterea parametrului prin adresa
+	afisare(t);
+	dezalocare(&t);
 	afisare(t);
 	return 0;
-
 }
