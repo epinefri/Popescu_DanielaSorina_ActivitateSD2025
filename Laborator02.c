@@ -53,8 +53,15 @@ struct Telefon* copiazaPrimeleNElemente(struct Telefon* vector, int nrElemente, 
 	return vectorNou;
 }
 
-void dezalocare(struct Telefon** vector, int* nrElemente) {
-	//dezalocam elementele din vector si vectorul
+void dezalocare(struct Telefon** vector, int* nrElemente) { // ** dublu pointer
+	for (int i = 0; i < (*nrElemente); i++) {
+		if ((*vector)[i].producator != NULL){
+			free((*vector)[i].producator);
+		}
+	}
+	free(*vector);
+	*vector = NULL;
+	*nrElemente = 0;
 }
 
 void copiazaAnumiteElemente(struct Telefon* vector, char nrElemente, float prag, struct Telefon** vectorNou, int* dimensiune) {
@@ -82,10 +89,15 @@ int main() {
 	vectTelefoane[2] = initializare(3, 256, "Apple", 2200, 'A');
 	afisareVector(vectTelefoane, nrTelefoane);
 	struct Telefon* primeleTelefoane = NULL;
-	int nrPrimeleTelefoane = 1;
+	int nrPrimeleTelefoane = 2;
 	
 	primeleTelefoane = copiazaPrimeleNElemente(vectTelefoane, nrTelefoane, nrPrimeleTelefoane);
 	printf("\n\nPrimele telefoane: \n");
 	afisareVector(primeleTelefoane, nrPrimeleTelefoane);
+
+	dezalocare(&primeleTelefoane, &nrPrimeleTelefoane);
+	afisareVector(primeleTelefoane, nrPrimeleTelefoane);
+	
 	return 0;
+
 }
